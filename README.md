@@ -121,6 +121,5 @@ All EDA is performed **exclusively on the training set**. This prevents "data sn
     - The Streamlit app uses a local model file for demo; for production, host the model via an API and add input validation and security.
     - I can polish the Streamlit UI, add presets, or prepare a Streamlit Cloud deploy config.
 
-    ---
+   
 
-    If you want, I can push this updated README and the new files to your remote repository again or re-run the previous pushes from the original folder (I can remove the stale git lock and push from there).
