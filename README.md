@@ -13,6 +13,9 @@ The project uses the "Credit Card Fraud Detection" dataset, which is publicly av
 - **Features:** The dataset contains 28 anonymized features (`V1` to `V28` from PCA), a `Time` feature, and an `Amount` feature.
 - **Target:** The `Class` column is the target variable, where `1` indicates a fraudulent transaction and `0` indicates a legitimate one.
 - **Challenge:** The dataset is highly imbalanced, with fraudulent transactions making up a very small fraction of the total data (~0.17%).
+- Dataset link (Kaggle): https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data
+
+Note: dataset added (download `creditcard.csv` and place it in the project root or update the notebook path).
 
 ## Methodological Pipeline
 
