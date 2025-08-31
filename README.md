@@ -6,6 +6,13 @@ This repository contains a comprehensive pipeline for detecting fraudulent credi
 
 The goal of this project is to build a machine learning model that can accurately identify fraudulent credit card transactions from a highly imbalanced dataset. The pipeline demonstrates a professional data science workflow, emphasizing best practices such as preventing data leakage, robust evaluation, and proper handling of imbalanced data.
 
+## New features
+- Streamlit demo app (`streamlit_app.py`) — interactive UI for entering transaction features and getting a live fraud probability.
+- Training script (`scripts/train_model.py`) — trains an XGBoost model with SMOTE and saves it to `models/xgb_model.pkl`.
+- XGBoost added and integrated; quick tuning examples included in the notebook.
+- Outlier removal (IQR) applied on selected features in the subsample.
+- `requirements.txt` updated to include `streamlit` and `joblib`.
+
 ## Dataset
 
 The project uses the "Credit Card Fraud Detection" dataset, which is publicly available on Kaggle.
@@ -13,7 +20,8 @@ The project uses the "Credit Card Fraud Detection" dataset, which is publicly av
 - **Features:** The dataset contains 28 anonymized features (`V1` to `V28` from PCA), a `Time` feature, and an `Amount` feature.
 - **Target:** The `Class` column is the target variable, where `1` indicates a fraudulent transaction and `0` indicates a legitimate one.
 - **Challenge:** The dataset is highly imbalanced, with fraudulent transactions making up a very small fraction of the total data (~0.17%).
-- Dataset link (Kaggle): https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data
+
+Dataset link (Kaggle): https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data
 
 Note: dataset added (download `creditcard.csv` and place it in the project root or update the notebook path).
 
@@ -52,53 +60,67 @@ All EDA is performed **exclusively on the training set**. This prevents "data sn
 1.  **Clone the repository:**
     ```bash
     git clone https://github.com/madhyala-bharadwaj/credit-card-fraud-detection
-    ````markdown
+    ```
     # Credit Card Fraud Detection (imbalanced data)
 
-    This repo contains code and a notebook for exploring and modeling the Kaggle "Credit Card Fraud Detection" dataset. The analysis focuses on handling extreme class imbalance and comparing sampling strategies and classifiers.
+    This repository contains code and a notebook for exploring and modeling the Kaggle "Credit Card Fraud Detection" dataset. The project focuses on handling extreme class imbalance, outlier reduction, model comparison, and a demo UI for live predictions.
 
-    ## What this project does (short)
-    - Loads the public `creditcard.csv` dataset (PCA V1..V28, Time, Amount, Class).
-    - Scales `Time` and `Amount`, inspects distributions and correlations.
-    - Creates a balanced subsample (random undersample) and also uses SMOTE (oversampling) during CV.
-    - Removes extreme outliers (IQR) on selected features to reduce noise.
-    - Trains and compares classifiers (Logistic Regression, KNN, SVC, Decision Tree, Random Forest, and XGBoost). Also includes a simple neural network baseline.
+    ## New features
+    - Streamlit demo app (`streamlit_app.py`) — interactive UI for entering transaction features and getting a live fraud probability.
+    - Training script (`scripts/train_model.py`) — trains an XGBoost model with SMOTE and saves it to `models/xgb_model.pkl`.
+    - XGBoost added and integrated; quick tuning examples included in the notebook.
+    - Outlier removal (IQR) applied on selected features in the subsample.
+    - `requirements.txt` updated to include `streamlit` and `joblib`.
 
-    ## Key methods and best practices
-    - Keep a held-out test set from the original data and never leak resampling into that test set.
-    - Apply SMOTE (or NearMiss) inside an `imblearn.pipeline` during cross-validation to avoid data leakage.
-    - Use stratified splits for preserving class ratios during CV.
+    ## Dataset
+    - Source: Kaggle — Credit Card Fraud Detection
+    - Link: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud/data
+    - Place `creditcard.csv` in the project root or update paths in the notebook/scripts.
 
-    ## Models included
-    - Logistic Regression
-    - K-Nearest Neighbors
-    - Support Vector Classifier
-    - Decision Tree
-    - Random Forest
-    - XGBoost (added and tuned via randomized search)
-    - Simple Keras neural network (for comparison)
+    ## What the project does
+    - Loads `creditcard.csv` (features: V1..V28, Time, Amount; target: Class).
+    - Scales `Time` and `Amount`, visualizes distributions and correlations.
+    - Creates a 50/50 subsample (random undersample) for EDA and uses SMOTE during CV for training.
+    - Removes extreme outliers using IQR on selected features.
+    - Trains and compares models: Logistic Regression, KNN, SVC, Decision Tree, Random Forest, XGBoost.
+    - Provides a simple Keras neural network baseline and visualizations (heatmaps, t-SNE/PCA).
 
-    ## Main metrics
-    - Precision, Recall, F1-score
-    - ROC AUC and Precision-Recall AUC (useful for imbalanced data)
-
-    ## How to run (Windows CMD)
-    1. Put `creditcard.csv` in this repository root or update the path used in the notebook/script.
+    ## How to run (Windows CMD / PowerShell)
+    1. Place `creditcard.csv` in the project root.
     2. Install dependencies:
+
     ```powershell
     pip install -r requirements.txt
     ```
-    3. Run the notebook (recommended):
+
+    3. Train and save the XGBoost model:
+
+    ```powershell
+    python scripts/train_model.py
+    ```
+
+    4. Run the Streamlit demo (after model saved to `models/xgb_model.pkl`):
+
+    ```powershell
+    streamlit run streamlit_app.py
+    ```
+
+    5. Inspect analysis and visualizations in the notebook:
+
     ```powershell
     jupyter notebook credit-fraud-Detection-imbalanced-datasets.ipynb
     ```
-    Or run the script (if present):
-    ```powershell
-    python creditCardFraudDetection.py
-    ```
+
+    ## Model outputs and files
+    - `models/xgb_model.pkl` — trained XGBoost model created by the training script.
+    - `streamlit_app.py` — demo UI for live predictions.
+    - `scripts/train_model.py` — training helper script.
+    - `requirements.txt` — updated dependencies.
 
     ## Notes & next steps
-    - XGBoost is included and configured to run with SMOTE in a pipeline; tune the randomized/grid search parameters to improve results.
-    - The notebook contains visualization cells (heatmaps, boxplots, t-SNE/PCA) — run interactively for best inspection.
+    - The Streamlit app uses a local model file for demo; for production, host the model via an API and add input validation and security.
+    - I can polish the Streamlit UI, add presets, or prepare a Streamlit Cloud deploy config.
 
-    ````
+    ---
+
+    If you want, I can push this updated README and the new files to your remote repository again or re-run the previous pushes from the original folder (I can remove the stale git lock and push from there).
